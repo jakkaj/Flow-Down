@@ -27,7 +27,7 @@ Entities can be defined in one location at the start of the sequence or group or
 	
 	e.g. [PersonEntity Id, Name, Age, Sex]
 
-**<Decision T,F>** where T (optional),F (optional) is the number of the next flow in this sequence 
+**&lt;Decision T,F&gt;** where T (optional),F (optional) is the number of the next flow in this sequence 
 
 	e.g. <Has Registered> -> [User] - return user if registered
 
@@ -67,11 +67,17 @@ Entities can be defined in one location at the start of the sequence or group or
 
 	No need to state OK status
 
-**|Process|**
+**|Process|** 
+
+	e.g. [Person] -> (SomeDatabase) -> <person exists> -> |Send them an email|
 
 **Domain or object or thing** (such as a server, device etc) have no delimiter. 
  
-//Comment about the thing that comes next
+	e.g. Phone -> [Person] -> API -> (SomeDatabase)
+
+//Comment about the thing that comes next//
+
+	e.g. e.g. Phone -> [Person] -> API //www.api.com// -> (SomeDatabase)
 
 **Notes**
 
