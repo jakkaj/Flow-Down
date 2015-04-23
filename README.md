@@ -19,7 +19,7 @@ Each flow consists of a title and a series one or more flow sequences. If there 
 
 **[Entity]**
 
-	e.g. [Name, Id] // Two separate entities
+	e.g. [Name + Id] // Two separate entities
 
 	e.g. [PersonEntity Id] //Person entity and/or a Person's id 
 
@@ -46,6 +46,9 @@ Entities can be defined in one location at the start of the sequence or group or
 
 **->>** Got to another flow sequence
 
+**^** An optional value
+
+	e.g. [Person + ^Device] -> API -> (Database)
 
 **(Database)**
 
