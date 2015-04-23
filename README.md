@@ -44,7 +44,7 @@ Entities can be defined in one location at the start of the sequence or group or
 
 **-x**  Delete
 
-**->>** Got to another flow sequence
+**->>** Go to another flow sequence
 
 **^** An optional value
 
@@ -146,17 +146,17 @@ Register a new user, but make them confirm email first
 	Register user flow
 	Client -> [Email Address + Pass] -> API -> [New User] -> (HighSpeedCache) -> [New User Confirm Code] -> |Send email to user|  >> Registration confirm user flow
 
-Use confirms their email address and registration continues
+User confirms their email address and registration continues
 
 	Registration confirm user flow
 	Email client -> [Confirm Code] -> API -> (HighSpeedCache) -> <Confirm code good> >> Create Account Flow 
 
-User did not get their email and woudl like it sent again
+User did not get their email and would like it sent again
 
 	Resend confirm email flow
 	Client -> [Confirm Code] -> API -> (HighSpeedCache) -> |resend confirm email|
 
-The main create account flow, needs the confirm code before it can continue. Resumes the flow by getting hte user out of the high speed cache. 
+The main create account flow, needs the confirm code before it can continue. Resumes the flow by getting the user out of the high speed cache. 
 
 	Create account flow //no public API, must start from registration confirm user flow//
 	API-> [Confirm Code] -> (HighSpeedCache) -> [New User] -> (SomeDatabase [Member] 'tbl_member') -> [User] -> (HighSpeedCache)
