@@ -17,52 +17,73 @@ Documentation
 Each flow consists of a title and a series one or more flow sequences. If there is more than one flow sequence, line numbers must be used.
 
 
-[Entity]
+**[Entity]**
+
 	e.g. [Name, Id] // Two separate entities
+
 	e.g. [PersonEntity Id] //Person entity and/or a Person's id 
 
 Entities can be defined in one location at the start of the sequence or group or they can be dynamically defined during a sequence (above)
-	e.g. 
-	[PersonEntity Id, Name, Age, Sex]
+	
+	e.g. [PersonEntity Id, Name, Age, Sex]
 
-<Decision T,F> where T (optional),F (optional) is the number of the next flow in this sequence 
+**<Decision T,F>** where T (optional),F (optional) is the number of the next flow in this sequence 
+
 	e.g. <Has Registered> -> [User] - return user if registered
+
 	e.g. <Has Registered 2> -> [User] - return user if registered, if not (so has failed) go to sequence 2
+
 	e.g. <Has Registered 2,3> - if registered go to sequence 2, else go to sequence 3 
+
 	Note: If no T or F listed, end flow if false. e.g. <Has Registered> -> [User] will not return user if F condition
+
 	e.g. <Has Registered @needsregister> -> [User] - return needs register status else return the user
 
--> Flow direction or add or update
--x  Delete
->> Got to another flow sequence
 
-(Database)
+**->** Flow direction or add or update
+
+**-x**  Delete
+
+**->>** Got to another flow sequence
+
+
+**(Database)**
+
 	e.g. [Person] -x (SomeDatabase) would delete a person 
+
 	e.g. [Person] -> (SomeDatabase) would add or update a person
+
 	e.g. [Person Id + PersonBelongings] -> (SomeDatabase [Person Id]) -> <Person Exists> -> (SomeDatabase PersonBelongings) //Write person belongings to the database if the person with id exists
 
-@status or command or instruction
+**@status** or command or instruction
+
 	e.g. @fail
+
 	e.g. @exists
+
 	e.g. @needsregistration
+
 	e.g. @wait for push notification
+
 	No need to state OK status
 
-|Process|
+**|Process|**
 
-Domain or object or thing (such as a server, device etc) have no delimiter. 
-
-Overall Note: Single quotes can be used to further define a name or thing on that object  or to include extra non-structured data. 
-	e.g. API 'Customer' would be the customer object on the API object
-	e.g. (SomeDatabase [Member] 'tbl_member, tbl_settings') might be used to assist the reader to know some extra information about where to store things
+**Domain or object or thing** (such as a server, device etc) have no delimiter. 
  
 //Comment about the thing that comes next
 
-
-
 **Notes**
-* Null, fail or error do not have to explicity handled. Consider the following flow: Client -> [Confirm Code] -> API -> (HighSpeedCache) -> |resend confirm email|. In this flow - Note we don't need to explicitly define that the flow will fail if the [Confirm Code] is not in the  (HighSpeedCache) database. The flow will stop. 
-* Flows must start with a title, followed by one or more lines of flow sequences. If there is more than one item in the sequence, the lines must be numbered.
+
+Null, fail or error do not have to explicity handled. Consider the following flow: Client -> [Confirm Code] -> API -> (HighSpeedCache) -> |resend confirm email|. In this flow - Note we don't need to explicitly define that the flow will fail if the [Confirm Code] is not in the  (HighSpeedCache) database. The flow will stop. 
+
+Flows must start with a title, followed by one or more lines of flow sequences. If there is more than one item in the sequence, the lines must be numbered.
+
+Single quotes can be used to further define a name or thing on that object  or to include extra non-structured data. 
+
+e.g. API 'Customer' would be the customer object on the API object
+
+e.g. (SomeDatabase [Member] 'tbl_member, tbl_settings') might be used to assist the reader to know some extra information about where to store things
 
 Examples
 --------
