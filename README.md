@@ -81,29 +81,33 @@ Entities can be defined in one location at the start of the sequence or group or
 
 **Notes**
 
-Null, fail or error do not have to explicity handled. Consider the following flow: Client -> [Confirm Code] -> API -> (HighSpeedCache) -> |resend confirm email|. In this flow - Note we don't need to explicitly define that the flow will fail if the [Confirm Code] is not in the  (HighSpeedCache) database. The flow will stop. 
+* Null, fail or error do not have to explicity handled. Consider the following flow: Client -> [Confirm Code] -> API -> (HighSpeedCache) -> |resend confirm email|. In this flow - Note we don't need to explicitly define that the flow will fail if the [Confirm Code] is not in the  (HighSpeedCache) database. The flow will stop. 
 
-Flows must start with a title, followed by one or more lines of flow sequences. If there is more than one item in the sequence, the lines must be numbered.
+* Flows must start with a title, followed by one or more lines of flow sequences. If there is more than one item in the sequence, the lines must be numbered.
 
-Single quotes can be used to further define a name or thing on that object  or to include extra non-structured data. 
+* Single quotes can be used to further define a name or thing on that object  or to include extra non-structured data. 
 
-e.g. API 'Customer' would be the customer object on the API object
+	e.g. API 'Customer' would be the customer object on the API object
 
-e.g. (SomeDatabase [Member] 'tbl_member, tbl_settings') might be used to assist the reader to know some extra information about where to store things
+	e.g. (SomeDatabase [Member] 'tbl_member, tbl_settings') might be used to assist the reader to know some extra information about where to store things
 
 Examples
 --------
 
 Send person id to server, check HighSpeedCache database for it. If it doesn’t exist go to 2, otherwise go on to next step and update the device id for that person.
 
-Set Person Device Id Flow //Flow title
+**Set Person Device Id Flow** //Flow title
+
 	1. [Person Id + DeviceDetails] -> API -> (HighSpeedCache [Person Id]) -> <Person Exists 2> -> (HighSpeedCachet [DeviceDetails])
+
 	2. @needsregistration -> [Person] -> API -> (HighSpeedCache) -> <1> //go to step 1 once registered
 
-Delete Person Flow
+**Delete Person Flow**
+
 	1. [Person Id] -> API -> (HighSpeedCache) -> <Exists> -x (HighSpeedCache) //delete the person with Id from HighSpeedCache if they exist. No need to define entities on the database as they can be inferred
 
-Compress Image Process Flow
+**Compress Image Process Flow**
+
 	1. [Image] -> API -> (Blob Storage) -> (Process Queue) -> |Resize and compress image| -> (Notification Queue) -> @imagecomplete_push
 
 
@@ -114,35 +118,47 @@ Real World Examples
 **User Flows**
 
 **Login flow**
+
 Client -> [User + Pass] -> API -> (SomeDatabase [Member]) -> [Access Token + Refresh Token] -> (' [Token]) -> [Token id] -> Client
 
 **Refresh Token flow**
+
 	1. Client -> <Token Expired> -> <Has refresh token 2> -> [Refresh Token] API -> <refresh token good> -> |Create tokens| -> [Access Token + Refresh Token] -> (HighSpeedCache) -> [Token id]
+
 	2. @norefreshtoken >> Login Flow 
 
 **Invalidate token flow**
+
 API -> [Token] -x (HighSpeedCache) 
 
 **Access using token flow**
+
 Client -> [Token Id] -> API OWIN -> (HighSpeedCache) -> [Token] -> <Has token @401> -> |Setup authorised user| -> |perform intended process|
 
 **Register user flow**
+
 Client -> [Email Address + Pass] -> API -> [New User] -> (HighSpeedCache) -> [New User Confirm Code] -> |Send email to user|  >> Registration confirm user flow
 
 **Registration confirm user flow**
+
 Email client -> [Confirm Code] -> API -> (HighSpeedCache) -> <Confirm code good> >> Create Account Flow 
 
 **Resend confirm email flow**
+
 Client -> [Confirm Code] -> API -> (HighSpeedCache) -> |resend confirm email|
 
-**Create account flow** 'no public API, must start from registration confirm user flow'
-API-> [Confirm Code] -> (HighSpeedCache) -> [New User] -> (SomeDatabase [Member]) -> [User] -> (HighSpeedCache)
+**Create account flow** //no public API, must start from registration confirm user flow//
+
+API-> [Confirm Code] -> (HighSpeedCache) -> [New User] -> (SomeDatabase [Member] 'tbl_member') -> [User] -> (HighSpeedCache)
 
 **Password reset initiate flow**
+
 API -> |Generate reset code| -> [Confirm Code] -> (HighSpeedCache) -> |Send email to user with reset code| -> Client -> @display check email message
 
 **Device password reset confirm flow**
+
 Email client -> Client -> [Confirm Code + New Password] -> API -> (HighSpeedCache) -> <is code correct @try again> -> (SomeDatabase) -> [Member] -> |Set member password| -> (SomeDatabase) -> (HighSpeedCache) -> Client -> @Reset success message
  
 **Logout user flow**
+
 Client -> API -> [User Token] -x (HighSpeedCache)
