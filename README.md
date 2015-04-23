@@ -45,9 +45,13 @@ Entities can be defined in one location at the start of the sequence or group or
 **-x**  Delete
 
 **->>** Go to another flow sequence
+
 	Go to another flow at the end
+
 	e.g. [Person + ^Device] -> API -> (Database) >> Register Validation Flow
+	
 	Insert a flow within another flow
+	
 	e.g. [Person + ^Device] -> API -> (Database) >> Register Validation Flow >> @NofityComplete
 
 **^** An optional value
