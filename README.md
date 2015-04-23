@@ -117,49 +117,58 @@ Real World Examples
 
 **User Flows**
 
-	**Login flow**
+Log a user in 
 
+	Login flow
 	Client -> [User + Pass] -> API -> (SomeDatabase [Member]) -> [Access Token + Refresh Token] -> (' [Token]) -> [Token id] -> Client
 
-	
-	**Refresh Token flow**
+Refresh a user token
 
+	Refresh Token flow
 	1. Client -> <Token Expired> -> <Has refresh token 2> -> [Refresh Token] API -> <refresh token good> -> |Create tokens| -> [Access Token + Refresh Token] -> (HighSpeedCache) -> [Token id]
-
 	2. @norefreshtoken >> Login Flow 
 
-**Invalidate token flow**
+Delete the user token to invalidate it
 
+	Invalidate token flow
 	API -> [Token] -x (HighSpeedCache) 
 
-**Access using token flow**
+Using a token in the HTML header field to set up a user in the OWIN stack
 
-	Client -> [Token Id] -> API OWIN -> (HighSpeedCache) -> [Token] -> <Has token @401> -> |Setup authorised user| -> |perform intended process|
+	Access using token flow
+	Client -> [Token Id 'Send as html header Token'] -> API OWIN -> (HighSpeedCache) -> [Token] -> <Has token @401> -> |Setup authorised user| -> |perform intended process|
 
-**Register user flow**
+Register a new user, but make them confirm email first
 
-Client -> [Email Address + Pass] -> API -> [New User] -> (HighSpeedCache) -> [New User Confirm Code] -> |Send email to user|  >> Registration confirm user flow
+	Register user flow
+	Client -> [Email Address + Pass] -> API -> [New User] -> (HighSpeedCache) -> [New User Confirm Code] -> |Send email to user|  >> Registration confirm user flow
 
-**Registration confirm user flow**
+Use confirms their email address and registration continues
 
-Email client -> [Confirm Code] -> API -> (HighSpeedCache) -> <Confirm code good> >> Create Account Flow 
+	Registration confirm user flow
+	Email client -> [Confirm Code] -> API -> (HighSpeedCache) -> <Confirm code good> >> Create Account Flow 
 
-**Resend confirm email flow**
+User did not get their email and woudl like it sent again
 
-Client -> [Confirm Code] -> API -> (HighSpeedCache) -> |resend confirm email|
+	Resend confirm email flow
+	Client -> [Confirm Code] -> API -> (HighSpeedCache) -> |resend confirm email|
 
-**Create account flow** //no public API, must start from registration confirm user flow//
+The main create account flow, needs the confirm code before it can continue. Resumes the flow by getting hte user out of the high speed cache. 
 
-API-> [Confirm Code] -> (HighSpeedCache) -> [New User] -> (SomeDatabase [Member] 'tbl_member') -> [User] -> (HighSpeedCache)
+	Create account flow //no public API, must start from registration confirm user flow//
+	API-> [Confirm Code] -> (HighSpeedCache) -> [New User] -> (SomeDatabase [Member] 'tbl_member') -> [User] -> (HighSpeedCache)
 
-**Password reset initiate flow**
+Reset password. Sends a code to the user email that they need to enter later in another flow
 
-API -> |Generate reset code| -> [Confirm Code] -> (HighSpeedCache) -> |Send email to user with reset code| -> Client -> @display check email message
+	Password reset initiate flow
+	API -> |Generate reset code| -> [Confirm Code] -> (HighSpeedCache) -> |Send email to user with reset code| -> Client -> @display check email message
 
-**Device password reset confirm flow**
+User has received the reset code, reset can proceed
 
-Email client -> Client -> [Confirm Code + New Password] -> API -> (HighSpeedCache) -> <is code correct @try again> -> (SomeDatabase) -> [Member] -> |Set member password| -> (SomeDatabase) -> (HighSpeedCache) -> Client -> @Reset success message
+	Device password reset confirm flow
+	Email client -> Client -> [Confirm Code + New Password] -> API -> (HighSpeedCache) -> <is code correct @try again> -> (SomeDatabase) -> [Member] -> |Set member password| -> (SomeDatabase) -> (HighSpeedCache) -> Client -> @Reset success message
  
-**Logout user flow**
+Log a user out by deleting their token from the high speed cache
 
-Client -> API -> [User Token] -x (HighSpeedCache)
+	Logout user flow
+	Client -> API -> [User Token] -x (HighSpeedCache)
