@@ -54,6 +54,10 @@ Entities can be defined in one location at the start of the sequence or group or
 	
 	e.g. [Person + ^Device] -> API -> (Database) >> Register Validation Flow >> @NofityComplete
 
+	Flows that start with >> can only be called from other flows
+
+	e.g. >> |Process Some Sever Side Thing| -> [Image]
+
 **^** An optional value
 
 	e.g. [Person + ^Device] -> API -> (Database)
