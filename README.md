@@ -44,6 +44,16 @@ Entities can be defined in one location at the start of the sequence or group or
 
 **-x**  Delete
 
+**-w** Write operation
+
+**-r** Read opertation
+	
+	Read and writes are only needed when you need to be specific for some reason. Otherwise you can just use the standar -> flow and read or write is inferred. 
+
+	e.g. [Person id] -r (database) -> [Person] -> |do stuff | -w (database)
+	
+	
+
 **->>** Go to another flow sequence
 
 	Go to another flow at the end
