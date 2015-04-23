@@ -117,11 +117,12 @@ Real World Examples
 
 **User Flows**
 
-**Login flow**
+	**Login flow**
 
-Client -> [User + Pass] -> API -> (SomeDatabase [Member]) -> [Access Token + Refresh Token] -> (' [Token]) -> [Token id] -> Client
+	Client -> [User + Pass] -> API -> (SomeDatabase [Member]) -> [Access Token + Refresh Token] -> (' [Token]) -> [Token id] -> Client
 
-**Refresh Token flow**
+	
+	**Refresh Token flow**
 
 	1. Client -> <Token Expired> -> <Has refresh token 2> -> [Refresh Token] API -> <refresh token good> -> |Create tokens| -> [Access Token + Refresh Token] -> (HighSpeedCache) -> [Token id]
 
@@ -129,11 +130,11 @@ Client -> [User + Pass] -> API -> (SomeDatabase [Member]) -> [Access Token + Ref
 
 **Invalidate token flow**
 
-API -> [Token] -x (HighSpeedCache) 
+	API -> [Token] -x (HighSpeedCache) 
 
 **Access using token flow**
 
-Client -> [Token Id] -> API OWIN -> (HighSpeedCache) -> [Token] -> <Has token @401> -> |Setup authorised user| -> |perform intended process|
+	Client -> [Token Id] -> API OWIN -> (HighSpeedCache) -> [Token] -> <Has token @401> -> |Setup authorised user| -> |perform intended process|
 
 **Register user flow**
 
