@@ -1,11 +1,11 @@
-# Flow-Mark-Down
-Flow Mark Down is a text based syntax for marking down flow diagrams
+# Flow-Down
+Flow Down is a text based syntax for marking down flow diagrams
 
 v .01
 
 |Work in progress|
 
-FMD allows you to use a structured, machine readable (hopefully!) syntax to create flow diagrams. 
+FD allows you to use a structured, machine readable (hopefully!) syntax to create flow diagrams. 
 
 It's meant to allow you to quickly prototype and iterate flows for your projects before you formalise them in to diagrams. 
 
@@ -119,7 +119,7 @@ Entities can be defined in one location at the start of the sequence or group or
 Examples
 --------
 
-Send person id to server, check HighSpeedCache database for it. If it doesn’t exist go to 2, otherwise go on to next step and update the device id for that person.
+Send person id to server, check HighSpeedCache database for it. If it doesnâ€™t exist go to 2, otherwise go on to next step and update the device id for that person.
 
 **Set Person Device Id Flow** //Flow title
 
