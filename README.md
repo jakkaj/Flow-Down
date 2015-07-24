@@ -80,6 +80,12 @@ Entities can be defined in one location at the start of the sequence or group or
 
 	e.g. [Person Id + PersonBelongings] -> (SomeDatabase [Person Id]) -> <Person Exists> -> (SomeDatabase PersonBelongings) //Write person belongings to the database if the person with id exists
 
+**? Query ?**
+
+Pass this query in to a database or something queryable
+	
+	e.g. ?Find all [User] that have name starting with "Ten"? -> (UserStorage) -> [Users]
+
 **@status** or command or instruction
 
 	e.g. @fail
